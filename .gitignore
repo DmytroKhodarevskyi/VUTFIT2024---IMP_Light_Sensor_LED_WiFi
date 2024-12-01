@@ -1,0 +1,12 @@
+.pio
+.vscode/
+
+IMP.code-workspace
+
+sdkconfig.esp32dev
+
+test/
+
+lib/
+
+include/
