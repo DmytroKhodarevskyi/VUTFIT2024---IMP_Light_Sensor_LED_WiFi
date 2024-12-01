@@ -66,9 +66,29 @@ esp_mqtt_client_handle_t client = NULL;
 
 void init_mqtt()
 {
-    esp_mqtt_client_config_t mqtt_cfg = {
+    const esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = MQTT_HOST,
+
+    //    .broker = {
+    //         .address = {
+    //             .uri = "mqtts://94ebb2070b1540a3ae7a6b8bed77731d.s1.eu.hivemq.cloud:8883",
+    //             .verification = {
+    //                 .skip_cert_common_name_check = true, // Skip Common Name (CN) check
+    //             },
+    //         },
+    //     },
+
+    // .broker.verification.certificate
+    // .credentials.client_id = MQTT_USERNAME,
+
+    // .credentials.username = MQTT_USERNAME,
+    // .credentials.authentication.password = MQTT_PASSWORD,
+
     };
+
+    // const esp_tls_cfg_t tls_cfg = {
+        // .
+    // };
 
     client = esp_mqtt_client_init(&mqtt_cfg);
     if (client == NULL)
@@ -83,11 +103,16 @@ void init_mqtt()
 
 esp_err_t send_led_brightness(uint32_t brightness)
 {
-    char brightness_str[6];
+    char brightness_str[6], message_topic[64];
     unsigned int int_brightness = (unsigned int)brightness;
     snprintf(brightness_str, sizeof(brightness_str), "%u", int_brightness);
+    // snprintf(message_topic, sizeof(message_topic), "home/led/brightness");
+    snprintf(message_topic, sizeof(message_topic), "%sled/brightness", MQTT_TOPIC);
 
-    int message_id = esp_mqtt_client_publish(client, "home/led/brightness", brightness_str, 0, 1, 0);
+    // printf("TOPIC: %s\n", message_topic);
+
+    // int message_id = esp_mqtt_client_publish(client, "home/led/brightness", brightness_str, 0, 1, 0);
+    int message_id = esp_mqtt_client_publish(client, message_topic, brightness_str, 0, 1, 0);
 
     if (message_id == -1)
     {

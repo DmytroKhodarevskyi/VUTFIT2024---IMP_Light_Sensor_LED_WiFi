@@ -3,13 +3,19 @@
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "mqtt_client.h"
+#include "esp_crt_bundle.h"
+#include "esp_tls.h"
 #include <string.h>
 #include <stdio.h>
 
 
-#define WIFI_SSID "your-ssid"
-#define WIFI_PASS "123"
+#define WIFI_SSID "iPhone Khoda"
+#define WIFI_PASS "12345678"
 #define MQTT_HOST "mqtt://broker.hivemq.com:1883"
+#define MQTT_USERNAME "Test1"
+#define MQTT_PASSWORD "Aa123123"
+#define MQTT_TOPIC "XKHODA01/"
+
 #define WIFI_CONNECTED_BIT BIT0
 static EventGroupHandle_t wifi_event_group;
 
