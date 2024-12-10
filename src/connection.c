@@ -125,3 +125,5 @@ esp_err_t send_led_brightness(uint32_t brightness)
         return ESP_OK;
     }
 }
+
+// заиграл бассок пиздец, я курил 
