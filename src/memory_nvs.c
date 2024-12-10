@@ -39,7 +39,6 @@ uint16_t read_from_nvs(const char *key, esp_err_t *result) {
         if (err == ESP_ERR_NVS_NOT_FOUND) {
             fprintf(stderr, "Value not found for key '%s'\n", key);
             *result = ESP_ERR_NOT_FOUND;
-            // nvs_close(nvs_handle);
             return 0;
         } 
 

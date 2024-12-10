@@ -7,7 +7,6 @@
 #define LEDC_TIMER LEDC_TIMER_0  // Timer used by LEDC
 #define LEDC_MODE LEDC_HIGH_SPEED_MODE // LEDC mode (low or high speed)
 #define LEDC_FREQUENCY 5000      // PWM frequency in Hz
-// #define LEDC_RESOLUTION LEDC_TIMER_13_BIT // PWM resolution in bits
 #define LEDC_RESOLUTION LEDC_TIMER_13_BIT // PWM resolution in bits
 
 void init_led();

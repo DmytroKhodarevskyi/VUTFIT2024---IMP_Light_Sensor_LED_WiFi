@@ -73,13 +73,10 @@ void smooth_set_led_brightness(uint32_t new_brightness, uint32_t duration, uint8
 
     // uint32_t steps = duration / 10;
     float step_brightness = (new_signed - curr_signed) / steps;
-    // printf("Step brightness: %f\n", step_brightness);
     for (int i = 0; i < steps; i++) {
         set_led_brightness(current_brightness + step_brightness);
         current_brightness += step_brightness;
         vTaskDelay(pdMS_TO_TICKS(10));
-        // pdMS_TO_TICKS(10);
-        // vTaskDelay(pdMS_TO_TICKS(10));
     }
     set_led_brightness(new_brightness);
 }

@@ -6,7 +6,6 @@
 // helper function to initialize the nvs
 void init_nvs();
 
-// esp_err_t save_to_nvs(const char *key, uint16_t value);
 esp_err_t save_to_nvs(const char *key, uint16_t value);
 
 uint16_t read_from_nvs(const char *key, esp_err_t *result);

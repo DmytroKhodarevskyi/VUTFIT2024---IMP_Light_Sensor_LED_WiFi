@@ -11,11 +11,8 @@
 #define DEFAULT_MAXIMUM_LIGHT 100
 
 void mqtt_log_task(void *pvParameters) {
-    // printf("MQTT task startING ----------------------------------------------------------------------\n");
     wifi_init();
     init_mqtt();
-
-    // printf("MQTT task started ----------------------------------------------------------------------\n");
 
     while (true) {
         printf("Sending brightness to MQTT...\n");
@@ -26,7 +23,7 @@ void mqtt_log_task(void *pvParameters) {
             printf("Error sending brightness to MQTT\n");
         }
     }
-    // vTaskDelete(NULL);
+    vTaskDelete(NULL);
 }
 
 void app_main() {
@@ -41,7 +38,6 @@ void app_main() {
     esp_err_t min_err;
     esp_err_t max_err;
 
-    
     remove_from_nvs("minimum");
     remove_from_nvs("maximum");
 
@@ -70,27 +66,12 @@ void app_main() {
         maximum = max;
     }
 
-    // printf("Minimum light level: %d\n", minimum);
-    // printf("Maximum light level: %d\n", maximum);
-
     i2c_master_init();
     init_led();
-
-    // printf("Free heap size: %u bytes\n", xPortGetFreeHeapSize());
-
-    // printf("Starting MQTT task...\n");
-
-    // xTaskCreate(mqtt_log_task, "mqtt_log_task", 4096, NULL, 1, NULL);
 
     if (xTaskCreate(mqtt_log_task, "mqtt_log_task", 4096, NULL, 1, NULL) != pdPASS) {
         printf("Failed to create mqtt_log_task\n");
     }
-
-
-
-    // uint16_t last_duty = 0;
-    // uint16_t new_duty = 0;
-
 
     while (true) {
 
@@ -101,16 +82,9 @@ void app_main() {
         // percentage = negtive_percentage(percentage);
         printf("Light Level: %.2f lx, Percentage: %d\n", lux, percentage);
         uint16_t duty = percentage_to_duty(percentage);
-        // printf("Duty: %d\n", duty);
 
         smooth_set_led_brightness(duty, 1000, 50);
 
-        // set_led_brightness(duty);
-
-
-        // float lux = read_bh1750();
-        // printf("Light Level: %.2f lx\n", lux);
-        // vTaskDelay(1000 / portTICK_PERIOD_MS);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
